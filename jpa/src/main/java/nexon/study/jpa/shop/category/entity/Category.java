@@ -1,4 +1,4 @@
-package nexon.study.jpa.user.general.entity;
+package nexon.study.jpa.shop.category.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,25 +8,23 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "category")
 @Entity
-@Table(name = "users")
-public class User {
+public class Category {
+
 
     @Setter(AccessLevel.NONE)
     @Id
-    @Column(name = "user_id")
+    @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id")
-    private String userId;
-
-    @Column(name = "pw")
-    private String password;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "date")
-    private LocalDateTime registerDate;
+    private LocalDateTime date;
 }

@@ -1,32 +1,34 @@
-package nexon.study.jpa.user.general.entity;
+package nexon.study.jpa.shop.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nexon.study.jpa.user.admin.entity.AdminUser;
 
 import java.time.LocalDateTime;
 
-@Setter
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Setter
+@Table(name = "shop")
 @Entity
-@Table(name = "users")
-public class User {
+public class Shop {
 
     @Setter(AccessLevel.NONE)
     @Id
-    @Column(name = "user_id")
+    @Column(name = "shop_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "id")
-    private String userId;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "pw")
-    private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "admin_user_id")
+    private AdminUser adminUser;
 
     @Column(name = "date")
-    private LocalDateTime registerDate;
+    private LocalDateTime date;
 }
