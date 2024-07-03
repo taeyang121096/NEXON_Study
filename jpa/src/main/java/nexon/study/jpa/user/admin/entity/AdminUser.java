@@ -5,9 +5,11 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Setter
 @Getter
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "amdin_user")
 public class AdminUser {
