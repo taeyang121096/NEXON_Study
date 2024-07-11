@@ -57,3 +57,17 @@
 >>> - 영속성 컨텍스트가 제공하는 기능을 사용 못함
 >>> - 식별자 값을 가지고 있다. (비영속 상태는 식별자 값이 없을 수 있지만 준영속은 영속이 되어진 후의 상태이므로 식별자 값을 가지고 있다.)
 >>> - detach, clear, close로 상태 가능
+
+### 엔티티 매핑
+> - 객체와 테이블 매핑 : @Entity, @Table
+> - 기본 키 매핑 : @Id
+> - 필드와 컬럼 매핑 : @Column
+> - 연관관계 매핑 : @ManyToOne, @JoinColum
+> - Entity
+>> - 기본 생성자는 필수다(public, protected 생성자)
+>> - final 클래스, enum, interface, inner 클래스에는 사용할 수 없다.
+>> - 저장할 필드에 final을 사용하면 안된다.
+> - Table
+>> - @Table은 엔티티와 매핑할 테이블을 지정한다. 생략하면 매핑한 엔티티 이름을 테이블 이름으로 사용한다.
+> - 기본키 매핑
+>> - identity, sequence, table 방식을 사용한다.
