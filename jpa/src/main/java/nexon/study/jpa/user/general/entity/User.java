@@ -2,8 +2,12 @@ package nexon.study.jpa.user.general.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import nexon.study.jpa.order.entity.Order;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 @Setter
 @Getter
@@ -27,4 +31,7 @@ public class User {
 
     @Column(name = "date")
     private LocalDateTime registerDate;
+
+    @OneToMany(mappedBy = "team")
+    private List<Order> orders = new ArrayList<Order>();
 }
