@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@ToString
 @Builder
 @Setter
 @Getter
@@ -32,6 +33,12 @@ public class User {
     @Column(name = "date")
     private LocalDateTime registerDate;
 
-    @OneToMany(mappedBy = "team")
-    private List<Order> orders = new ArrayList<Order>();
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @Builder.Default
+    private List<Order> orders = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user")
+    private Identity identity;
 }

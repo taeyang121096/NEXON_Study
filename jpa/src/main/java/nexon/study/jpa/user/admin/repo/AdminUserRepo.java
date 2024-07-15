@@ -3,7 +3,6 @@ package nexon.study.jpa.user.admin.repo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
-import nexon.study.jpa.core.jpa.JpaUtil;
 import nexon.study.jpa.user.admin.entity.AdminUser;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class AdminUserRepo {
 
-    private final JpaUtil jpaUtil;
+    private final EntityManager em;
 
     public AdminUser saveAdminUser(AdminUser adminUser){
-        EntityManager em = jpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         try {
@@ -32,7 +30,6 @@ public class AdminUserRepo {
 
     public AdminUser findById(Long id){
 
-        EntityManager em = jpaUtil.getEntityManager();
         AdminUser adminUser = null;
         try {
             adminUser = em.find(AdminUser.class, id);
