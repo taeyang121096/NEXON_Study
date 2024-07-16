@@ -1,14 +1,16 @@
 package nexon.study.jpa.shop.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import nexon.study.jpa.user.admin.entity.AdminUser;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@ToString
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -25,10 +27,16 @@ public class Shop {
     @Column(name = "name")
     private String name;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_user_id")
     private AdminUser adminUser;
 
     @Column(name = "date")
     private LocalDateTime date;
+
+    @ToString.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<ShopCategory> shopCategories = new ArrayList<>();
 }

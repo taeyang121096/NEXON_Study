@@ -1,13 +1,16 @@
 package nexon.study.jpa.shop.category.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import nexon.study.jpa.shop.entity.ShopCategory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,4 +30,9 @@ public class Category {
 
     @Column(name = "date")
     private LocalDateTime date;
+
+    @ToString.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<ShopCategory> shopCategories = new ArrayList<>();
 }
