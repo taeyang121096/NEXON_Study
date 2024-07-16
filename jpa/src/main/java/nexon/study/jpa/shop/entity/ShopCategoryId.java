@@ -7,7 +7,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class ShopCategoryId implements Serializable {
 
-    private Long shopId;
+    private Long shop;
 
-    private Long categoryId;
+    private Long category;
 }

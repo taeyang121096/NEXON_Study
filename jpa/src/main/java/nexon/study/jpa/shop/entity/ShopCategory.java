@@ -19,4 +19,7 @@ public class ShopCategory {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+//    @EmbeddedId
+//    private ShopCategoryId id;
+
 }

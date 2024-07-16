@@ -31,11 +31,14 @@ public class Menu {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", insertable = false, updatable = false)
     private Shop shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_category")
+    @JoinColumns({
+            @JoinColumn(name = "shop_id"),
+            @JoinColumn(name = "category_id")
+    })
     private ShopCategory shopCategory;
 
 
