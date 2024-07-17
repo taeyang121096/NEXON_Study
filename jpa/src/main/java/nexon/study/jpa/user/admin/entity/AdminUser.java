@@ -2,8 +2,10 @@ package nexon.study.jpa.user.admin.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import nexon.study.jpa.shop.entity.Shop;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -28,4 +30,7 @@ public class AdminUser {
 
     @Column(name = "date")
     private LocalDateTime registerDate;
+
+    @OneToMany(mappedBy = "adminUser", cascade = CascadeType.PERSIST)
+    private List<Shop> shops;
 }

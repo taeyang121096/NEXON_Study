@@ -39,4 +39,5 @@ public class Shop {
     @Builder.Default
     @OneToMany
     private List<ShopCategory> shopCategories = new ArrayList<>();
+
 }
