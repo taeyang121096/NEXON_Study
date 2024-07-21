@@ -26,6 +26,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.assertj:assertj-core:3.21.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 추가된 의존성
+    // Hibernate Validator
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
+    // Bean Validation API (Java EE 7 version)
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
+
+    // Optional: EL (Expression Language) for advanced validation features
+    implementation 'org.glassfish:jakarta.el:4.0.2'
 }
 
 tasks.named('test') {

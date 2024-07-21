@@ -2,13 +2,11 @@ package com.example.concurrency.domain.point.entity;
 
 import com.example.concurrency.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -20,15 +18,21 @@ public class Point {
 
     private Long point;
 
+    private LocalDateTime registerDate;
+
+    @ToString.Exclude
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    private LocalDateTime registerDate;
 
     @Builder
     public Point(Long point, LocalDateTime registerDate) {
         this.point = point;
         this.registerDate = registerDate;
+    }
+
+    public void setPointWithUser(User user){
+        this.user = user;
+        user.setPoint(this);
     }
 }

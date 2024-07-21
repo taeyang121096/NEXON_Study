@@ -3,14 +3,12 @@ package com.example.concurrency.domain.user.entity;
 import com.example.concurrency.domain.order.entity.Order;
 import com.example.concurrency.domain.point.entity.Point;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "users")
@@ -24,13 +22,16 @@ public class User {
 
     private String pw;
 
+    private LocalDateTime registerDate;
+
+    @ToString.Exclude
+    @Setter
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Point point;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<Order> orders;
-
-    private LocalDateTime registerDate;
 
     @Builder
     public User(String id, String pw, LocalDateTime registerDate) {
