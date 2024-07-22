@@ -16,6 +16,7 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
 
+    @Setter
     private Long point;
 
     private LocalDateTime registerDate;

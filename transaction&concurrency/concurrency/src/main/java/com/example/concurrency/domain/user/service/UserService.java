@@ -19,6 +19,10 @@ public class UserService {
                 .registerDate(userDto.getRegisterDate()).build());
     }
 
+    @Transactional(readOnly = true)
+    public User findUserByUserId(String userId) {
+        return userRepository.findByUserId(userId);
+    }
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }

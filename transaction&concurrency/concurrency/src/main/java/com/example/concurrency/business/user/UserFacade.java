@@ -1,7 +1,6 @@
 package com.example.concurrency.business.user;
 
 import com.example.concurrency.domain.point.dto.PointDto;
-import com.example.concurrency.domain.point.entity.Point;
 import com.example.concurrency.domain.point.service.PointService;
 import com.example.concurrency.domain.user.dto.UserDto;
 import com.example.concurrency.domain.user.entity.User;
