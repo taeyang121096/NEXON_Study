@@ -25,6 +25,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation 'org.slf4j:slf4j-api:2.0.7'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     // 추가된 의존성
     // Hibernate Validator
@@ -35,6 +36,10 @@ dependencies {
 
     // Optional: EL (Expression Language) for advanced validation features
     implementation 'org.glassfish:jakarta.el:4.0.2'
+
+    // SLF4J API
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+
 }
 
 tasks.named('test') {

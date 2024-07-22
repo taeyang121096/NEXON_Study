@@ -3,10 +3,7 @@ package com.example.concurrency.domain.order.entity;
 import com.example.concurrency.domain.item.entity.Item;
 import com.example.concurrency.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,13 +23,14 @@ public class Order {
 
     private LocalDateTime registerDate;
 
+    @Setter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User users;
+    private User user;
 
     @Builder
     public Order(Long count, Long totalPrice, LocalDateTime registerDate) {
@@ -40,4 +38,10 @@ public class Order {
         this.totalPrice = totalPrice;
         this.registerDate = registerDate;
     }
+
+    public void setOrderWithUser(User user) {
+        this.user = user;
+        user.getOrders().add(this);
+    }
+
 }

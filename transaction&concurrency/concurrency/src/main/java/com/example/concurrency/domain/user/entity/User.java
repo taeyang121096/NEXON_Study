@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -30,7 +31,7 @@ public class User {
     private Point point;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders;
 
     @Builder
@@ -38,5 +39,6 @@ public class User {
         this.id = id;
         this.pw = pw;
         this.registerDate = registerDate;
+        this.orders = new ArrayList<>();
     }
 }
