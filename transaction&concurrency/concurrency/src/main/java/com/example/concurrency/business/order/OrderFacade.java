@@ -20,11 +20,11 @@ public class OrderFacade {
 
     private final ItemService itemService;
 
-
-    public Long syncOrder(String userId, String itemName, Long quantity) throws Exception {
+    @Transactional
+    public Long syncOrder(String userId, String itemName, Long quantity) {
         Item item = itemService.findByName(itemName);
         if(item.getCount() < quantity){
-            throw new Exception("수 부족함");
+            throw new RuntimeException("수 부족함");
         }
 
         User user = userService.findUserByUserId(userId);
@@ -32,7 +32,7 @@ public class OrderFacade {
         Long totalPrice = item.getPrice() * quantity;
 
         if (point.getPoint() < totalPrice) {
-            throw new Exception("잔액 부족");
+            throw new RuntimeException("잔액 부족");
         }
 
         point.setPoint(point.getPoint() - totalPrice);

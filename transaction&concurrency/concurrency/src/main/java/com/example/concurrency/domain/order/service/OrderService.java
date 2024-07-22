@@ -6,6 +6,7 @@ import com.example.concurrency.domain.order.repo.OrderRepository;
 import com.example.concurrency.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,5 +20,10 @@ public class OrderService {
                 .build();
         order.setOrderWithUser(user);
         return orderRepository.save(order);
+    }
+
+    @Transactional
+    public void deleteAllItems(){
+        orderRepository.deleteAllItems();
     }
 }

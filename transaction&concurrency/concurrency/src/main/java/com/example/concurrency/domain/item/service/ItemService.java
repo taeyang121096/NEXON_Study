@@ -27,4 +27,9 @@ public class ItemService {
     public Item findByName(String name) {
         return itemRepository.findByName(name);
     }
+
+    @Transactional
+    public void deleteAllItems(){
+        itemRepository.deleteAllItems();
+    }
 }

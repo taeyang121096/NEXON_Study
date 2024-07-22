@@ -13,7 +13,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Transactional
     public User saveUser(UserDto userDto) {
         return userRepository.save(User.builder().id(userDto.getId()).pw(userDto.getPw())
                 .registerDate(userDto.getRegisterDate()).build());
@@ -23,7 +22,8 @@ public class UserService {
     public User findUserByUserId(String userId) {
         return userRepository.findByUserId(userId);
     }
-    public User findUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+
+    public void deleteAllItems(){
+        userRepository.deleteAllItems();
     }
 }

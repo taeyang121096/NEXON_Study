@@ -24,4 +24,9 @@ public class PointService {
 
         return pointRepository.save(point);
     }
+
+    @Transactional
+    public void deleteAllItems(){
+        pointRepository.deleteAllItems();
+    }
 }

@@ -27,7 +27,7 @@ public class User {
 
     @ToString.Exclude
     @Setter
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Point point;
 
     @ToString.Exclude
