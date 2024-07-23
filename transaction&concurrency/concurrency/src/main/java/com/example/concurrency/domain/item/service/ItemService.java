@@ -26,6 +26,10 @@ public class ItemService {
         return itemRepository.findByName(name);
     }
 
+    public Item findByNameWithXLock(String name) {
+        return itemRepository.findByNameWithXLock(name);
+    }
+
 
     public void deleteAllItems(){
         itemRepository.deleteAllItems();

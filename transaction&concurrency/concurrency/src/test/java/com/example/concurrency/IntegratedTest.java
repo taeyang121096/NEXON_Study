@@ -36,7 +36,7 @@ public class IntegratedTest {
     @Autowired
     private OrderFacade orderFacade;
 
-    private final int maxThread = 100;
+    private final int maxThread = 3000;
 
     @BeforeEach
     void setUp(){
@@ -48,8 +48,8 @@ public class IntegratedTest {
 
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
-                .price(100L)
-                .count(100L)
+                .price(10L)
+                .count(2958L)
                 .build());
     }
 
@@ -60,8 +60,13 @@ public class IntegratedTest {
 
         for(int i = 0; i < maxThread; i++) {
             executorService.execute(() -> {
-                orderFacade.syncOrder("test", "한정 상품", 1L);
-                countDownLatch.countDown();
+                try {
+                    orderFacade.syncOrder("test", "한정 상품", 1L);
+                } catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
             });
         }
 
@@ -75,8 +80,13 @@ public class IntegratedTest {
 
         for(int i = 0; i < maxThread; i++) {
             executorService.execute(() -> {
-                order();
-                countDownLatch.countDown();
+                try {
+                    order();
+                }catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
             });
         }
 
@@ -94,8 +104,13 @@ public class IntegratedTest {
 
         for(int i = 0; i < maxThread; i++) {
             executorService.execute(() -> {
-                order();
-                countDownLatch.countDown();
+                try {
+                    orderFacade.xLockOrder("test", "한정 상품", 1L);
+                } catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
             });
         }
 
