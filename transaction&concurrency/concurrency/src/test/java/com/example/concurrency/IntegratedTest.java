@@ -5,7 +5,6 @@ import com.example.concurrency.business.user.UserFacade;
 import com.example.concurrency.domain.item.dto.ItemDto;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.service.OrderService;
-import com.example.concurrency.domain.point.service.PointService;
 import com.example.concurrency.domain.user.dto.UserDto;
 import com.example.concurrency.domain.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SpringBootTest
 public class IntegratedTest {
@@ -28,13 +31,12 @@ public class IntegratedTest {
     private OrderService orderService;
 
     @Autowired
-    private PointService pointService;
-
-    @Autowired
     private UserFacade userFacade;
 
     @Autowired
     private OrderFacade orderFacade;
+
+    private final int maxThread = 100;
 
     @BeforeEach
     void setUp(){
@@ -46,20 +48,62 @@ public class IntegratedTest {
 
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
-                .price(20000L)
-                .count(10L)
+                .price(100L)
+                .count(100L)
                 .build());
     }
 
-
-    @Transactional
     @Test
-    void syncTest() throws Exception {
-        Long value = orderFacade.syncOrder("test", "한정 상품", 3L);
+    void orderTest() throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                orderFacade.syncOrder("test", "한정 상품", 1L);
+                countDownLatch.countDown();
+            });
+        }
+
+        countDownLatch.await();
     }
 
+    @Test
+    void syncTest() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                order();
+                countDownLatch.countDown();
+            });
+        }
+
+        countDownLatch.await();
+    }
+
+    public synchronized void order(){
+        orderFacade.syncOrder("test", "한정 상품", 1L);
+    }
+
+    @Test
+    void X_LockTest() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                order();
+                countDownLatch.countDown();
+            });
+        }
+
+        countDownLatch.await();
+    }
+
+
     private void deleteAll(){
-        pointService.deleteAllItems();
         orderService.deleteAllItems();
         itemService.deleteAllItems();
         userService.deleteAllItems();

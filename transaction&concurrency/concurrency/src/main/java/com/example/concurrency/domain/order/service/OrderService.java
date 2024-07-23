@@ -1,5 +1,6 @@
 package com.example.concurrency.domain.order.service;
 
+import com.example.concurrency.domain.item.entity.Item;
 import com.example.concurrency.domain.order.dto.OrderDto;
 import com.example.concurrency.domain.order.entity.Order;
 import com.example.concurrency.domain.order.repo.OrderRepository;
@@ -13,16 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public Order createOrder(User user, OrderDto orderDto) {
+    @Transactional
+    public Order createOrder(User user, Item item, OrderDto orderDto) {
         Order order = Order.builder().count(orderDto.getCount())
                 .totalPrice(orderDto.getTotalPrice())
                 .registerDate(orderDto.getRegisterDate())
                 .build();
+
         order.setOrderWithUser(user);
+        order.setItem(item);
+
         return orderRepository.save(order);
     }
 
-    @Transactional
     public void deleteAllItems(){
         orderRepository.deleteAllItems();
     }

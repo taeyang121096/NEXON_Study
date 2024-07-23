@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    @Transactional(readOnly = true)
     @Query("select i from Item i where i.name = :name")
     Item findByName(@Param("name") String name);
 
+    @Transactional
     @Modifying
     @Query("delete from Item")
     void deleteAllItems();

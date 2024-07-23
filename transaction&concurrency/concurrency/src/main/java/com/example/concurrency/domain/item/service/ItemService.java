@@ -13,7 +13,6 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    @Transactional
     public Item save(ItemDto itemDto) {
         return itemRepository.save(Item.builder()
                         .name(itemDto.getName())
@@ -23,12 +22,11 @@ public class ItemService {
                 .build());
     }
 
-    @Transactional(readOnly = true)
     public Item findByName(String name) {
         return itemRepository.findByName(name);
     }
 
-    @Transactional
+
     public void deleteAllItems(){
         itemRepository.deleteAllItems();
     }

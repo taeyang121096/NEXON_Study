@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    @Transactional
     @Modifying
     @Query("delete from orders")
     void deleteAllItems();

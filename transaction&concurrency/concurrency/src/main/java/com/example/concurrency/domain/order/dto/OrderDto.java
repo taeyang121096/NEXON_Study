@@ -20,6 +20,7 @@ public class OrderDto {
 
     private Long totalPrice;
 
-    private LocalDateTime registerDate;
+    @Builder.Default
+    private LocalDateTime registerDate = LocalDateTime.now();
 
 }
