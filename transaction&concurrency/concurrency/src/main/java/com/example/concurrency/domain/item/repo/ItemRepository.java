@@ -25,4 +25,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Modifying
     @Query("delete from Item")
     void deleteAllItems();
+
+    @Query(value = "select get_lock(:lockName, :timeOut)", nativeQuery = true)
+    int getLock(@Param("lockName") String lockName, @Param("timeOut") long timeOut);
+
+    @Query(value = "select release_lock(:lockName)", nativeQuery = true)
+    int releaseLock(@Param("lockName") String lockName);
 }

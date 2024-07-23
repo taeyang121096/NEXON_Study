@@ -3,6 +3,7 @@ package com.example.concurrency;
 import com.example.concurrency.business.order.OrderFacade;
 import com.example.concurrency.business.user.UserFacade;
 import com.example.concurrency.domain.item.dto.ItemDto;
+import com.example.concurrency.domain.item.repo.ItemRepository;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.service.OrderService;
 import com.example.concurrency.domain.user.dto.UserDto;
@@ -36,7 +37,11 @@ public class IntegratedTest {
     @Autowired
     private OrderFacade orderFacade;
 
-    private final int maxThread = 3000;
+    @Autowired
+    private ItemRepository itemRepository;
+
+    private final int maxThread = 1000;
+
 
     @BeforeEach
     void setUp(){
@@ -49,7 +54,7 @@ public class IntegratedTest {
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
                 .price(10L)
-                .count(2958L)
+                .count(3000L)
                 .build());
     }
 
@@ -63,7 +68,7 @@ public class IntegratedTest {
                 try {
                     orderFacade.syncOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -83,7 +88,7 @@ public class IntegratedTest {
                 try {
                     order();
                 }catch (Exception e){
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -107,7 +112,7 @@ public class IntegratedTest {
                 try {
                     orderFacade.xLockOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -116,6 +121,59 @@ public class IntegratedTest {
 
         countDownLatch.await();
     }
+
+    @Test
+    void Named_LockTest() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+        int timeout = 100;
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                try {
+                    int lock = itemRepository.getLock("lock:key", timeout);
+                    if(lock == 0) {
+                        throw new RuntimeException("unacqurie lock-key");
+                    }
+                    orderFacade.namedLockOrder("test", "한정 상품", 1L);
+                } catch (Exception e){
+//                    e.printStackTrace();
+                } finally {
+                    itemRepository.releaseLock("lock:key");
+                    countDownLatch.countDown();
+                }
+            });
+        }
+
+        countDownLatch.await();
+    }
+
+    @Test
+    void redis_LockTest() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+        int timeout = 100;
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                try {
+                    int lock = itemRepository.getLock("lock:key", timeout);
+                    if(lock == 0) {
+                        throw new RuntimeException("unacqurie lock-key");
+                    }
+                    orderFacade.namedLockOrder("test", "한정 상품", 1L);
+                } catch (Exception e){
+//                    e.printStackTrace();
+                } finally {
+                    itemRepository.releaseLock("lock:key");
+                    countDownLatch.countDown();
+                }
+            });
+        }
+
+        countDownLatch.await();
+    }
+
 
 
     private void deleteAll(){

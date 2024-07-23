@@ -40,6 +40,13 @@ dependencies {
     // SLF4J API
     implementation 'org.slf4j:slf4j-api:2.0.7'
 
+    // Redisson 의존성 추가
+    implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
+    // Spring Data Redis 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // mysql
+    implementation 'mysql:mysql-connector-java:8.0.30'
+
 }
 
 tasks.named('test') {
