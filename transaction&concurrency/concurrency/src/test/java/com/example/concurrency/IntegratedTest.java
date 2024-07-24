@@ -40,7 +40,7 @@ public class IntegratedTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private final int maxThread = 1000;
+    private final int maxThread = 3000;
 
 
     @BeforeEach
@@ -53,8 +53,8 @@ public class IntegratedTest {
 
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
-                .price(10L)
-                .count(3000L)
+                .price(1L)
+                .count(10000L)
                 .build());
     }
 
@@ -152,20 +152,14 @@ public class IntegratedTest {
     void redis_LockTest() throws Exception {
         ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
         CountDownLatch countDownLatch = new CountDownLatch(maxThread);
-        int timeout = 100;
 
         for(int i = 0; i < maxThread; i++) {
             executorService.execute(() -> {
                 try {
-                    int lock = itemRepository.getLock("lock:key", timeout);
-                    if(lock == 0) {
-                        throw new RuntimeException("unacqurie lock-key");
-                    }
-                    orderFacade.namedLockOrder("test", "한정 상품", 1L);
+                    orderFacade.distributedLockOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
 //                    e.printStackTrace();
                 } finally {
-                    itemRepository.releaseLock("lock:key");
                     countDownLatch.countDown();
                 }
             });
