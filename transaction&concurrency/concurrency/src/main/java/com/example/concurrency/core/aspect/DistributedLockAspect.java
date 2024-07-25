@@ -2,10 +2,9 @@ package com.example.concurrency.core.aspect;
 
 import com.example.concurrency.core.annotation.DistributedLock;
 import com.example.concurrency.core.parser.CustomSpringELParser;
-import com.example.concurrency.core.transaction.DistributedLockTransaction;
+import com.example.concurrency.core.transaction.LockTransaction;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -20,7 +19,7 @@ public class DistributedLockAspect {
 
     private final RedissonClient redissonClient;
 
-    private final DistributedLockTransaction distributedLockTransaction;
+    private final LockTransaction lockTransaction;
 
     @Around("@annotation(distributedLock)")
     public Object distributedLock(ProceedingJoinPoint point, DistributedLock distributedLock) throws Throwable {
@@ -42,7 +41,7 @@ public class DistributedLockAspect {
             if(!available){
                 throw new RuntimeException("lock key를 얻지 못했습니다. >>" + lockName);
             }
-            return distributedLockTransaction.proceed(point);
+            return lockTransaction.proceed(point);
 
         } catch (Exception e){
             throw new RuntimeException(e);

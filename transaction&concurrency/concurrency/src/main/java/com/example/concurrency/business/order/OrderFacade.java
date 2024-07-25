@@ -1,6 +1,7 @@
 package com.example.concurrency.business.order;
 
 import com.example.concurrency.core.annotation.DistributedLock;
+import com.example.concurrency.core.annotation.RedisLock;
 import com.example.concurrency.domain.item.entity.Item;
 import com.example.concurrency.domain.item.repo.ItemRepository;
 import com.example.concurrency.domain.item.service.ItemService;
@@ -25,7 +26,7 @@ public class OrderFacade {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public Long syncOrder(String userId, String itemName, Long quantity) {
+    public void syncOrder(String userId, String itemName, Long quantity) {
 
         Item item = itemService.findByName(itemName);
 
@@ -52,11 +53,10 @@ public class OrderFacade {
 
         point.setPoint(point.getPoint() - totalPrice);
 
-        return point.getPoint();
     }
 
     @Transactional
-    public Long xLockOrder(String userId, String itemName, Long quantity) {
+    public void xLockOrder(String userId, String itemName, Long quantity) {
 
         Item item = itemService.findByNameWithXLock(itemName);
 
@@ -83,11 +83,10 @@ public class OrderFacade {
 
         point.setPoint(point.getPoint() - totalPrice);
 
-        return point.getPoint();
     }
 
     @Transactional
-    public Long namedLockOrder(String userId, String itemName, Long quantity) {
+    public void namedLockOrder(String userId, String itemName, Long quantity) {
 
         Item item = itemService.findByName(itemName);
 
@@ -113,13 +112,11 @@ public class OrderFacade {
                 .build());
 
         point.setPoint(point.getPoint() - totalPrice);
-
-        return point.getPoint();
 
     }
 
     @DistributedLock(lockKey = "'OrderFacade:distributedLockOrder:' + #itemName")
-    public Long distributedLockOrder(String userId, String itemName, Long quantity) {
+    public void distributedLockOrder(String userId, String itemName, Long quantity) {
 
         Item item = itemService.findByName(itemName);
 
@@ -146,7 +143,35 @@ public class OrderFacade {
 
         point.setPoint(point.getPoint() - totalPrice);
 
-        return point.getPoint();
+    }
+
+    @RedisLock(lockKey = "'OrderFacade:redisLockOrder:' + #itemName")
+    public void redisLockOrder(String userId, String itemName, Long quantity) {
+
+        Item item = itemService.findByName(itemName);
+
+        if (item.getCount() < quantity) {
+            throw new RuntimeException("수 부족함");
+        }
+        Long totalPrice = item.getPrice() * quantity;
+
+        User user = userService.findUserByUserId(userId);
+        Point point = user.getPoint();
+
+
+        if (point.getPoint() < totalPrice) {
+            throw new RuntimeException("잔액 부족");
+        }
+
+        item.setCount(item.getCount() - quantity);
+
+
+        orderService.createOrder(user, item, OrderDto.builder()
+                .count(quantity)
+                .totalPrice(totalPrice)
+                .build());
+
+        point.setPoint(point.getPoint() - totalPrice);
 
     }
 }

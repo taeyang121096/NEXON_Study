@@ -28,7 +28,7 @@ class UserRepositoryTest {
         User saveUser = User.builder().id("userTest").pw("userTest")
                 .registerDate(LocalDateTime.now()).build();
         Point point = Point.builder().point(5000L).registerDate(LocalDateTime.now()).build();
-        point.setPointWithUser(saveUser);
+        saveUser.setPoint(point);
 
         User user = userRepository.save(saveUser);
 

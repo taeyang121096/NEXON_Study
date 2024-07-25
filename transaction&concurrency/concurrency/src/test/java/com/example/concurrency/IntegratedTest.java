@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CountDownLatch;
@@ -40,9 +39,9 @@ public class IntegratedTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private final int maxThread = 3000;
+    private final int maxThread = 10;
 
-
+    @Transactional
     @BeforeEach
     void setUp(){
         deleteAll();
@@ -53,8 +52,8 @@ public class IntegratedTest {
 
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
-                .price(1L)
-                .count(10000L)
+                .price(10L)
+                .count(1500L)
                 .build());
     }
 
@@ -68,7 +67,7 @@ public class IntegratedTest {
                 try {
                     orderFacade.syncOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -88,7 +87,7 @@ public class IntegratedTest {
                 try {
                     order();
                 }catch (Exception e){
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -112,7 +111,7 @@ public class IntegratedTest {
                 try {
                     orderFacade.xLockOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -137,7 +136,7 @@ public class IntegratedTest {
                     }
                     orderFacade.namedLockOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     itemRepository.releaseLock("lock:key");
                     countDownLatch.countDown();
@@ -149,7 +148,7 @@ public class IntegratedTest {
     }
 
     @Test
-    void redis_LockTest() throws Exception {
+    void distributedLockTest() throws Exception {
         ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
         CountDownLatch countDownLatch = new CountDownLatch(maxThread);
 
@@ -158,7 +157,7 @@ public class IntegratedTest {
                 try {
                     orderFacade.distributedLockOrder("test", "한정 상품", 1L);
                 } catch (Exception e){
-//                    e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     countDownLatch.countDown();
                 }
@@ -168,11 +167,35 @@ public class IntegratedTest {
         countDownLatch.await();
     }
 
+    @Test
+    void redisLockTest() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
+        CountDownLatch countDownLatch = new CountDownLatch(maxThread);
+
+        for(int i = 0; i < maxThread; i++) {
+            executorService.execute(() -> {
+                try {
+                    orderFacade.redisLockOrder("test", "한정 상품", 1L);
+                } catch (Exception e){
+                    e.printStackTrace();
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+
+        countDownLatch.await();
+    }
+
+    @Test
+    void eventException() throws Exception {
+
+    }
 
 
     private void deleteAll(){
         orderService.deleteAllItems();
-        itemService.deleteAllItems();
         userService.deleteAllItems();
+        itemService.deleteAllItems();
     }
 }

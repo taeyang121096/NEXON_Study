@@ -1,5 +1,6 @@
 package com.example.concurrency.domain.user.entity;
 
+import com.example.concurrency.domain.coupon.entity.Coupon;
 import com.example.concurrency.domain.order.entity.Order;
 import com.example.concurrency.domain.point.entity.Point;
 import jakarta.persistence.*;
@@ -27,8 +28,14 @@ public class User {
 
     @ToString.Exclude
     @Setter
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "point_id")
     private Point point;
+
+    @ToString.Exclude
+    @Setter
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Coupon> coupons;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -40,5 +47,7 @@ public class User {
         this.pw = pw;
         this.registerDate = registerDate;
         this.orders = new ArrayList<>();
+        this.coupons = new ArrayList<>();
     }
+
 }

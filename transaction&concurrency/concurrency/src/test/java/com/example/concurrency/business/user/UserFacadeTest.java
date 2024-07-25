@@ -30,7 +30,6 @@ class UserFacadeTest {
         Point point = user.getPoint();
 
         assertThat(point.getPointId()).isEqualTo(user.getPoint().getPointId());
-        assertThat(user.getUserId()).isEqualTo(point.getUser().getUserId());
     }
 
 }

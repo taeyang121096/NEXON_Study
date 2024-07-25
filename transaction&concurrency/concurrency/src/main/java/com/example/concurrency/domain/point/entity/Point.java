@@ -21,10 +21,9 @@ public class Point {
 
     private LocalDateTime registerDate;
 
-    @ToString.Exclude
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @Setter
+//    @OneToOne(mappedBy = "point", fetch = FetchType.LAZY)
+//    private User user;
 
     @Builder
     public Point(Long point, LocalDateTime registerDate) {
@@ -32,8 +31,4 @@ public class Point {
         this.registerDate = registerDate;
     }
 
-    public void setPointWithUser(User user){
-        this.user = user;
-        user.setPoint(this);
-    }
 }

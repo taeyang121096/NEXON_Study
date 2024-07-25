@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class DistributedLockTransaction {
+public class LockTransaction {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Object proceed(ProceedingJoinPoint point) throws Throwable {

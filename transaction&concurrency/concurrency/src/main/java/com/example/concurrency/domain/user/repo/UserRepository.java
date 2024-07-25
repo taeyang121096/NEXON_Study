@@ -16,7 +16,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByUserId(@Param("userId") String userId);
 
     @Transactional
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("delete from users")
     void deleteAllItems();
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("delete from Point ")
+    void deleteAllPoint();
+
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("delete from Coupon ")
+    void deleteAllCoupon();
 }
