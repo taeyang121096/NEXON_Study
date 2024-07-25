@@ -48,7 +48,6 @@ public class EventTest {
                 .id("test")
                 .pw("test")
                 .build());
-        System.out.println(user);
     }
 
 

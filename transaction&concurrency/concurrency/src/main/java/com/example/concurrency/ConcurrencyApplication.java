@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@EnableAsync
 @EnableConfigurationProperties(RedisProperties.class)
 @SpringBootApplication
 public class ConcurrencyApplication {

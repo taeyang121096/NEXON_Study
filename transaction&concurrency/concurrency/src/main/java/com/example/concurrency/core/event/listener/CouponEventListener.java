@@ -22,7 +22,6 @@ public class CouponEventListener {
 
     private final UserService userService;
 
-    @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void coupon(CouponEvent event) {
         Coupon coupon = Coupon.builder().name(event.getName()).price(event.getPrice())
