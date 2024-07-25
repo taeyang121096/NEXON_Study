@@ -17,4 +17,6 @@ public class PointDto {
     @Builder.Default
     private LocalDateTime registerDate = LocalDateTime.now();
 
+    private String userId;
+
 }

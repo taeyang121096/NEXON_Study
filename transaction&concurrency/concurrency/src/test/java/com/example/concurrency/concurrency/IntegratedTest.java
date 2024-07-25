@@ -1,4 +1,4 @@
-package com.example.concurrency;
+package com.example.concurrency.concurrency;
 
 import com.example.concurrency.business.order.OrderFacade;
 import com.example.concurrency.business.user.UserFacade;
@@ -41,7 +41,6 @@ public class IntegratedTest {
 
     private final int maxThread = 10;
 
-    @Transactional
     @BeforeEach
     void setUp(){
         deleteAll();

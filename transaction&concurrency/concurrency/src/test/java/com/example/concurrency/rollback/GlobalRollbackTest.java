@@ -1,9 +1,6 @@
-package com.example.concurrency.event;
+package com.example.concurrency.rollback;
 
-import com.example.concurrency.business.order.OrderFacade;
 import com.example.concurrency.business.user.UserFacade;
-import com.example.concurrency.domain.item.dto.ItemDto;
-import com.example.concurrency.domain.item.repo.ItemRepository;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.service.OrderService;
 import com.example.concurrency.domain.user.dto.UserDto;
@@ -14,17 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @SpringBootTest
-public class EventTest {
+public class GlobalRollbackTest {
 
-    @Autowired
-    private ItemService itemService;
 
     @Autowired
     private UserService userService;
@@ -38,25 +28,23 @@ public class EventTest {
 
     @Transactional
     @BeforeEach
-    void setUp(){
+    void setUp() {
         deleteAll();
     }
 
     @Test
     void eventException() throws Exception {
-        User user = userFacade.createUser(UserDto.builder()
+        userFacade.createRollbackUser(UserDto.builder()
                 .id("test")
                 .pw("test")
                 .build());
     }
 
 
-    private void deleteAll(){
+    private void deleteAll() {
         orderService.deleteAllItems();
         userService.deleteAllItems();
-        itemService.deleteAllItems();
+
     }
+
 }
-
-
-

@@ -22,6 +22,7 @@ public class CouponEventListener {
 
     private final UserService userService;
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void coupon(CouponEvent event) {
         Coupon coupon = Coupon.builder().name(event.getName()).price(event.getPrice())
@@ -30,6 +31,5 @@ public class CouponEventListener {
         User user = userService.findUserByUserId(event.getUserId());
 
         user.getCoupons().add(coupon);
-
     }
 }
