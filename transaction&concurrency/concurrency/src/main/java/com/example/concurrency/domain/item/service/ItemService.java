@@ -5,7 +5,6 @@ import com.example.concurrency.domain.item.entity.Item;
 import com.example.concurrency.domain.item.repo.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

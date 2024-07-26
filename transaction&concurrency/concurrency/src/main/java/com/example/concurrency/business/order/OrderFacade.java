@@ -3,7 +3,6 @@ package com.example.concurrency.business.order;
 import com.example.concurrency.core.annotation.DistributedLock;
 import com.example.concurrency.core.annotation.RedisLock;
 import com.example.concurrency.domain.item.entity.Item;
-import com.example.concurrency.domain.item.repo.ItemRepository;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.dto.OrderDto;
 import com.example.concurrency.domain.order.service.OrderService;
@@ -23,7 +22,7 @@ public class OrderFacade {
     private final OrderService orderService;
 
     private final ItemService itemService;
-    private final ItemRepository itemRepository;
+
 
     @Transactional
     public void syncOrder(String userId, String itemName, Long quantity) {
