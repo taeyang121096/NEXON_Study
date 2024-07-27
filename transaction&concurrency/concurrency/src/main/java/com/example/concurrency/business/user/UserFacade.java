@@ -29,7 +29,7 @@ public class UserFacade {
 
     @Transactional
     public User createUser(UserDto userDto){
-        eventPublisher.publishEvent(new PointEvent(5000L, userDto.getId()));
+        eventPublisher.publishEvent(new PointEvent(50000L, userDto.getId()));
         eventPublisher.publishEvent(new CouponEvent("회원가입", 3000L,LocalDateTime.now().plusDays(30L),LocalDateTime.now(), userDto.getId()));
         return userService.createUser(userDto);
     }

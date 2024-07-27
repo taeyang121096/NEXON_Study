@@ -38,7 +38,7 @@ public class IntegratedTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private final int maxThread = 1;
+    private final int maxThread = 2000;
 
     @BeforeEach
     void setUp(){
@@ -51,7 +51,7 @@ public class IntegratedTest {
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
                 .price(10L)
-                .count(1500L)
+                .count(5000L)
                 .build());
     }
 
