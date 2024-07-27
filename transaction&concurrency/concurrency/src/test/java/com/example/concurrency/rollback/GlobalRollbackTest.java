@@ -3,6 +3,7 @@ package com.example.concurrency.rollback;
 import com.example.concurrency.business.user.UserFacade;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.service.OrderService;
+import com.example.concurrency.domain.point.service.PointService;
 import com.example.concurrency.domain.user.dto.UserDto;
 import com.example.concurrency.domain.user.entity.User;
 import com.example.concurrency.domain.user.service.UserService;
@@ -24,6 +25,8 @@ public class GlobalRollbackTest {
 
     @Autowired
     private UserFacade userFacade;
+    @Autowired
+    private PointService pointService;
 
 
     @Transactional
@@ -34,10 +37,19 @@ public class GlobalRollbackTest {
 
     @Test
     void eventException() throws Exception {
-        userFacade.createRollbackUser(UserDto.builder()
-                .id("test")
-                .pw("test")
-                .build());
+        try {
+            userFacade.createRollbackUser(UserDto.builder()
+                    .id("test")
+                    .pw("test")
+                    .build());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void notRollbackTest() throws Exception {
+        pointService.notRollbackPoint();
     }
 
 

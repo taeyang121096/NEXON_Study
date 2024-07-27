@@ -45,7 +45,7 @@ public class UserFacade {
                             .point(5000L)
                     .build());
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         eventPublisher.publishEvent(new CouponEvent("회원가입", 3000L,LocalDateTime.now().plusDays(30L),LocalDateTime.now(), userDto.getId()));
 

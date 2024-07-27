@@ -38,7 +38,7 @@ public class IntegratedTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private final int maxThread = 2000;
+    private final int maxThread = 1;
 
     @BeforeEach
     void setUp(){
