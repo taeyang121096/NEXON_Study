@@ -12,9 +12,15 @@
 
 
 # 주요 내용
->
 >## 트랜잭션 사용시 이슈
+>> - 물리, 논리 트랜잭션 차이
+>> - global rollback
 >## 동시성 해결 방안
+>> - synchronized
+>> - x lock
+>> - named lock
+>> - lettuce lock
+>> - redisson lock
 
 
 
