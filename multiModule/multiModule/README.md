@@ -41,3 +41,9 @@
 > - 인프라모듈(외부 api 연동) 
 > - 클라우드 시스템 모듈(config, 서버 모듈을 위한 설정)
 
+
+# Gradle 스크립트 실행 순서
+> 1. settings.gradle 에서 모듈 리스트 등록
+> 2. root build.gradle 실행
+> 3. 각 모듈의 build.gradle이 존재하면 실행
+
