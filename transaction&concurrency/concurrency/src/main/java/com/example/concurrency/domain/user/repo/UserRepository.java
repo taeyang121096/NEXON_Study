@@ -30,4 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query("delete from Coupon ")
     void deleteAllCoupon();
+
+    @Transactional(readOnly = true)
+    @Query("SELECT u FROM users u JOIN FETCH u.point WHERE u.id = :userId")
+    User findByUserWithPointByUserId(@Param("userId") String userId);
 }

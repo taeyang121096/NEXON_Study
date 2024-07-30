@@ -30,4 +30,8 @@ public class OrderService {
     public void deleteAllItems(){
         orderRepository.deleteAllItems();
     }
+
+    public long getOrderCount(){
+        return orderRepository.count();
+    }
 }

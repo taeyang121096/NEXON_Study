@@ -31,4 +31,8 @@ public class UserService {
         userRepository.deleteAllPoint();
         userRepository.deleteAllCoupon();
     }
+
+    public User findByUserWithPointByUserId(String userId){
+        return userRepository.findByUserWithPointByUserId(userId);
+    }
 }

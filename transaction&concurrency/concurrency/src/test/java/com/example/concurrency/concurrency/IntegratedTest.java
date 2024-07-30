@@ -3,10 +3,14 @@ package com.example.concurrency.concurrency;
 import com.example.concurrency.business.order.OrderFacade;
 import com.example.concurrency.business.user.UserFacade;
 import com.example.concurrency.domain.item.dto.ItemDto;
+import com.example.concurrency.domain.item.entity.Item;
 import com.example.concurrency.domain.item.repo.ItemRepository;
 import com.example.concurrency.domain.item.service.ItemService;
 import com.example.concurrency.domain.order.service.OrderService;
+import com.example.concurrency.domain.point.entity.Point;
 import com.example.concurrency.domain.user.dto.UserDto;
+import com.example.concurrency.domain.user.entity.User;
+import com.example.concurrency.domain.user.repo.UserRepository;
 import com.example.concurrency.domain.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class IntegratedTest {
@@ -38,7 +44,7 @@ public class IntegratedTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private final int maxThread = 1;
+    private final int maxThread = 100;
 
     @BeforeEach
     void setUp(){
@@ -50,8 +56,8 @@ public class IntegratedTest {
 
         itemService.save(ItemDto.builder()
                 .name("한정 상품")
-                .price(10L)
-                .count(5000L)
+                .price(1000L)
+                .count(150L)
                 .build());
     }
 
@@ -73,6 +79,14 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
+
+        assertThat(point.getPoint()).isNotEqualTo(0L);
+        assertThat(item.getCount()).isNotEqualTo(100L);
+        assertThat(orderCount).isNotEqualTo(50L);
     }
 
     @Test
@@ -93,6 +107,15 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
+
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
+
+        assertThat(point.getPoint()).isEqualTo(0L);
+        assertThat(item.getCount()).isEqualTo(100L);
+        assertThat(orderCount).isEqualTo(50L);
     }
 
     public synchronized void order(){
@@ -117,6 +140,15 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
+
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
+
+        assertThat(point.getPoint()).isEqualTo(0L);
+        assertThat(item.getCount()).isEqualTo(100L);
+        assertThat(orderCount).isEqualTo(50L);
     }
 
     @Test
@@ -143,6 +175,15 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
+
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
+
+        assertThat(point.getPoint()).isEqualTo(0L);
+        assertThat(item.getCount()).isEqualTo(100L);
+        assertThat(orderCount).isEqualTo(50L);
     }
 
     @Test
@@ -163,6 +204,15 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
+
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
+
+        assertThat(point.getPoint()).isEqualTo(0L);
+        assertThat(item.getCount()).isEqualTo(100L);
+        assertThat(orderCount).isEqualTo(50L);
     }
 
     @Test
@@ -183,11 +233,15 @@ public class IntegratedTest {
         }
 
         countDownLatch.await();
-    }
 
-    @Test
-    void eventException() throws Exception {
+        User user = userService.findByUserWithPointByUserId("test");
+        Item item = itemService.findByName("한정 상품");
+        long orderCount = orderService.getOrderCount();
+        Point point = user.getPoint();
 
+        assertThat(point.getPoint()).isEqualTo(0L);
+        assertThat(item.getCount()).isEqualTo(100L);
+        assertThat(orderCount).isEqualTo(50L);
     }
 
 

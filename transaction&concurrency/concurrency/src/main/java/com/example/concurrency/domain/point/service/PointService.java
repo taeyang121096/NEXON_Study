@@ -49,4 +49,9 @@ public class PointService {
 
     }
 
+    @Transactional(readOnly = true)
+    public Point getPointByPointId(Long pointId) {
+        return pointRepository.findById(pointId).orElse(null);
+    }
+
 }
