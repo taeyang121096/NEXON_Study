@@ -1,4 +1,3 @@
 rootProject.name = 'multiModule'
-
 include 'api-module'
 include 'domain-module'
