@@ -115,4 +115,57 @@
 > - ARG
 >   - 빌드할 때 사용할 변수를 지정한다.
 >   - 빌드할 때만 사용할 수 있다.
-- docker compose
+## docker compose
+> - 도커 컴포즈는 시스템 구축과 관련된 명령어를 하나의 파일로 정의하고 한번에 실행할 수 있게 해주는 도구이다.
+> - 여러개의 컨테이너를 정의하고 실행할 수 있으며, 컨테이너 간의 의존성을 설정할 수 있다.
+> - docker-compose.yml 파일을 작성하여 여러개의 컨테이너를 정의하고 실행할 수 있다.
+> - docker compose는 컨테이너 생성 및 삭제만 가능하다. 관리 기능은 없다.
+>### Docker Compose 구성 요소
+>- **Services**: Docker Compose에서 실행할 컨테이너를 정의한다. 이미지 이름, 컨테이너 이름, 포트, 환경 변수 등의 정보를 포함한다.
+>- **Networks**: 각 서비스 간의 네트워크 연결을 정의한다. 이름과 드라이버 등의 정보를 포함한다.
+>- **Volumes**: 애플리케이션에서 사용하는 데이터 볼륨을 정의한다. 이름, 드라이버, 옵션 등의 정보를 포함한다.
+>- **Environments**: 서비스에서 사용할 환경 변수를 정의한다.
+>- **Configuration**: 서비스에서 사용할 환경 설정 파일을 정의한다.
+>- **Deployments**: 서비스를 배포하는 데 사용할 설정을 정의한다.
+> ### docker compose 명령어
+## docker-compose 명령어
+>- \-f 옵션
+>    - 기본적으로 `docker compose` 명령어는 `docker-compose.yml` 파일이 있는 위치에서 실행해야 한다. 만약 실행 위치에 `docker-compose.yml` 파일이 없거나, 이름이 다르다면 \-f 옵션을 통해 파일 경로를 주어야 한다.
+>    - 예시: `docker compose -f ./docker-compose.prod.yml up`
+>
+>- docker compose build \<service\>
+>    - `docker-compose.yml` 파일에서 필요한 이미지들을 찾아서 빌드한다. 따로 서비스를 지정하지 않으면 모든 이미지가 빌드된다.
+>
+>- docker compose up \<service\>
+>    - `docker-compose.yml` 파일에서 서비스에 필요한 모든 컨테이너를 생성하고 시작한다. 만약 컨테이너가 빌드되지 않았거나, 빌드된 이후 도커파일의 변동으로 다시 빌드되어야 하는 경우, 이미지를 빌드한 후 컨테이너를 생성, 시작한다.
+>    - 모든 이미지를 새로 빌드해서 컨테이너를 생성하고 싶다면: `docker compose up --build`
+>    - 일괄로 중단(stop)하고 싶다면 Ctrl + C
+>
+>- docker compose down \<service\>
+>    - 해당 프로젝트의 컨테이너를 중단하고, 제거한다. network나 volume 또한 제거된다. 단순히 잠시 중단한 뒤 나중에 다시 시작하고 싶다면 `docker compose stop` 혹은 `docker compose`가 실행되고 있는 터미널에서 Ctrl + C를 통해 중단해야 한다.
+>
+>- docker compose stop \<service\>
+>    - 명시한 서비스, 혹은 명시한 서비스가 없다면 전체 컨테이너를 중단한다. down과는 다르게 단순 중단이므로 `start` 명령어로 다시 시작할 수 있다.
+>
+>- docker compose start \<service\>
+>    - 생성된 후에 멈췄던 컨테이너를 시작하는 명령어. 쉽게 말해 `up`을 통해 생성되고, 시작한 이후 `docker compose stop` 혹은 Ctrl + C를 통해 중단된 서비스를 다시 시작할 수 있다.
+>
+>- docker compose restart \<service\>
+>    - `docker compose stop` + `docker compose start`
+>    - 만약 build 후 restart를 한다면 직전 생성된 이미지를 사용한다. 따라서 돌아가고 있는 컨테이너의 이미지를 바꿔야 한다면, `docker compose build <service>` 후 `docker compose restart <service>`를 실행한다.
+>
+>- docker compose ps
+>    - 현재 동작하는 컨테이너를 보여준다.
+>
+>- docker compose logs \<service\>
+>    - 해당 서비스의 로그를 보여준다.
+>
+>- docker exec \<container_id/name\> \<command\>
+>    - 현재 돌아가는 컨테이너에 명령어를 전달해준다. 만약 `container_name`을 지정해주지 않았다면, `docker ps`를 통해 `container id`를 먼저 얻어야 한다.
+>    - 예시: `docker exec -it <container_id/name> /bin/bash`
+>    - 이미지에 따라 `/bin/bash`를 찾을 수 없다고 뜰 수 있다. 특히 `alpine` 이미지에서 이렇게 뜨는 경우가 많은데, 이 때는 `/bin/sh`를 대신 써주면 된다.
+>
+>- docker exec config \<service\>
+>    - 설정 값 등을 보여준다. 환경변수 등이 제대로 들어갔는지 확인하고 싶을 때 사용하면 유용하다.
+
+
