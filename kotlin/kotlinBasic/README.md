@@ -256,3 +256,4 @@ Kotlin은 하나의 코드베이스로 Android, iOS, 웹, 데스크톱 애플리
 - [Kotlin 공식 문서](https://kotlinlang.org/docs/home.html)
 - [Kotlin Koans - 실습 예제](https://kotlinlang.org/docs/koans.html)
 - [JetBrains Academy Kotlin Track](https://www.jetbrains.com/academy/)
+- [읽어보면 좋은 블로그](https://incheol-jung.gitbook.io/docs/study/kotlin-in-action/3)
