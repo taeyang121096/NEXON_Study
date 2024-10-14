@@ -39,4 +39,11 @@
 ![img.png](img.png)
 
 
+### Kafka 명령어
+topic 생성
+```shell
+./kafka-topics.sh --create --topic tester --bootstrap-server Kafka00Service:9092,Kafka01Service:9092,Kafka02Service:9092 --partitions 3 --replication-factor 2
+```
+
+
 ### - kafka는 메타데이터 관리를 위해 zookeeper 를 사용하였으나 2.8 버전에서 부터 kraft를 통해 클러스터 메타데이터를 관리할 수 있게 되었다.
