@@ -12,6 +12,6 @@ public class HealthController {
 
     @GetMapping
     public ResponseEntity<String> health(HttpServletRequest request){
-        return ResponseEntity.ok(String.format("health1 port : %s",request.getServerPort()));
+        return ResponseEntity.ok(String.format("health port : %s",request.getServerPort()));
     }
 }
