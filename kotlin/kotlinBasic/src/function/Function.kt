@@ -41,7 +41,7 @@ fun main(){
     println(test("test"))
     println(simpleTest("test"))
     println(defaultTest("test"))
-
+    IntRange(1, 10)
 
     val newList = newList(1, 2, 3)
 
