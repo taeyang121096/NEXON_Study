@@ -3,12 +3,14 @@ package com.example.hexagonal.adapters.persistence.order
 import com.example.hexagonal.core.domain.order.Order
 import com.example.hexagonal.ports.out.order.OrderRepositoryPort
 import jakarta.persistence.*
+import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 interface JpaOrderRepository : JpaRepository<OrderEntity, Long>
 
 @Repository
+//@Primary
 class OrderPersistenceAdapter(
     private val jpaOrderRepository: JpaOrderRepository
 ) : OrderRepositoryPort {

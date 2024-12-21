@@ -1,9 +1,10 @@
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
-	id("org.springframework.boot") version "3.4.0"
+	id("org.springframework.boot") version "3.2.0"
 	id("io.spring.dependency-management") version "1.1.6"
 	kotlin("plugin.jpa") version "1.9.25"
+	kotlin("kapt") version "1.9.25"
 }
 
 group = "com.example"
@@ -36,6 +37,16 @@ dependencies {
 	// 로깅 설정
 	implementation("org.springframework.boot:spring-boot-starter-logging")
 	implementation("ch.qos.logback:logback-classic")
+
+	// QueryDSL
+	// implementation("com.querydsl:querydsl-jpa")
+	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+
+	// kapt("com.querydsl:querydsl-apt:5.0.0:jpa")
+	kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+
+	// javax.persistence 의존성 추가 (QueryDSL을 위한)
+	implementation("javax.persistence:javax.persistence-api:2.2")
 
 	// 개발 환경
 	developmentOnly("org.springframework.boot:spring-boot-devtools") // 핫 리로드
