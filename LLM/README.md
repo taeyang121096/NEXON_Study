@@ -2,6 +2,9 @@
 
 LLM (Large Language Models) 및 RAG (Retrieval-Augmented Generation) 학습 및 실무 적용 플랜
 
+keyword: 머신러닝 > 딥러닝 > llm 
+- 각각의 차이를 넣어야함
+- 
 ---
 
 ## **1. 기초 다지기 (1~2주)**
@@ -111,6 +114,63 @@ LLM (Large Language Models) 및 RAG (Retrieval-Augmented Generation) 학습 및 
 ## **마인드 맵**
 
 ![img.png](img.png)
+
+---
+
+# LLM 학습 커리큘럼
+
+LLM(Large Language Models)은 자연어 처리(NLP)의 최전선에서 활약하며, ChatGPT와 같은 기술의 기반이 되는 중요한 분야입니다. 이 커리큘럼은 LLM을 학습하고자 하는 분들을 위해 초급, 중급, 고급 단계로 나뉘어 구성되었습니다.
+
+---
+
+## **초급: 기초 다지기**
+### 1. 프로그래밍 언어 습득
+- **Python**: LLM을 다루는 데 가장 널리 사용되는 언어입니다.  
+  - **학습 목표**: Python의 기본 문법 및 데이터 처리를 위한 라이브러리 사용.
+  - **추천 라이브러리**: Pandas, NumPy
+
+### 2. 기초 통계학과 선형대수학
+- **통계학**
+  - 평균, 표준편차, 확률 등의 기초 개념 이해.
+- **선형대수학**
+  - 행렬 연산, 벡터, 스칼라 곱 등의 수학적 개념 습득.
+
+### 3. 자연어 처리(NLP)의 기초
+- 토큰화(Tokenization)
+- 어휘 분석(Vocabulary Analysis)
+- 문법 분석(Syntax Parsing)
+
+---
+
+## **중급: 심화 학습**
+### 1. 기계학습의 기본
+- **학습 유형**
+  - 지도 학습(Supervised Learning)
+  - 비지도 학습(Unsupervised Learning)
+  - 강화 학습(Reinforcement Learning)
+- **학습 목표**: 머신러닝 알고리즘의 기본적인 개념과 활용 방법 습득.
+
+### 2. 딥러닝과 신경망
+- **신경망 기초**: Fully Connected Networks
+- **고급 신경망 구조**
+  - CNN(Convolutional Neural Networks)
+  - RNN(Recurrent Neural Networks)
+  - LSTM(Long Short-Term Memory)
+
+### 3. LLM의 이해
+- **핵심 기술**
+  - Transformer 아키텍처
+- **학습 목표**
+  - ChatGPT와 같은 모델의 기반 기술 이해.
+  - LLM의 학습 과정 및 동작 원리 학습.
+
+---
+
+## **고급: 전문가 과정** (추가 학습)
+고급 과정은 사용자의 필요에 따라 정의되며, 특정 도메인의 활용 사례와 대규모 모델의 미세 조정(Fine-Tuning) 등을 포함할 수 있습니다.
+
+---
+
 
 
 
