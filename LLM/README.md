@@ -2,115 +2,7 @@
 
 LLM (Large Language Models) 및 RAG (Retrieval-Augmented Generation) 학습 및 실무 적용 플랜
 
-keyword: 머신러닝 > 딥러닝 > llm 
-- 각각의 차이를 넣어야함
-- 
 ---
-
-## **1. 기초 다지기 (1~2주)**
-
-### **1.1 LLM 기본 개념 학습**
-- **목표:** LLM의 원리와 구조를 이해하고 대표적인 모델의 활용 사례를 학습.
-- **내용:**
-  - Transformer 구조 이해
-  - 대표적인 LLM (GPT, BERT, LLaMA 등)의 차이점과 활용 사례
-  - 파인튜닝과 프롬프트 엔지니어링 개념 학습
-- **자료 추천:**
-  - YouTube 강의: [What are Transformers?](https://www.youtube.com/watch?v=4Bdc55j80l8)
-  - 블로그: Hugging Face Blog 및 OpenAI Blog
-  - 논문: Attention is All You Need (Transformers 논문)
-
-### **1.2 RAG 기본 개념 학습**
-- **목표:** RAG의 구성 요소와 동작 방식을 이해.
-- **내용:**
-  - RAG의 동작 원리 (LLM + 검색 시스템 통합)
-  - 벡터 데이터베이스 (e.g., Pinecone, Weaviate, Elasticsearch)
-  - 인덱싱과 검색의 기본
-- **자료 추천:**
-  - 문서: [Pinecone Docs](https://www.pinecone.io/docs/)
-  - GitHub 프로젝트: [RAG example with OpenAI](https://github.com/openai/retrieval-augmented-generation)
-
----
-
-## **2. 실습 환경 구축 및 간단한 프로젝트 진행 (3~4주)**
-
-### **2.1 개발 환경 구축**
-- **목표:** 실습에 필요한 환경을 설정.
-- **내용:**
-  - Python 학습: 데이터 처리 및 모델 활용을 위해 기본 문법 학습
-  - Hugging Face 라이브러리 활용
-  - Docker 및 REST API 학습 (Java와의 연동 대비)
-- **자료 추천:**
-  - Python: [Real Python](https://realpython.com/)
-  - Docker: [Docker 공식 튜토리얼](https://docs.docker.com/get-started/)
-  - Hugging Face: [Transformers 튜토리얼](https://huggingface.co/transformers/)
-
-### **2.2 간단한 프로젝트 진행**
-- **목표:** RAG의 기본 동작을 이해하기 위한 간단한 예제 구현.
-- **프로젝트 아이디어:**
-  - 주제: “FAQ 챗봇 만들기”
-  - 기술 스택: 
-    - LLM: OpenAI API 또는 Hugging Face 모델
-    - RAG: Elasticsearch 또는 Pinecone
-    - 데이터: 회사의 FAQ 데이터를 JSON 형식으로 준비
-- **단계:**
-  1. FAQ 데이터를 벡터로 변환 (Hugging Face 또는 다른 임베딩 모델 사용)
-  2. 검색 시스템 설정 (Elasticsearch/Pinecone)
-  3. 간단한 REST API로 챗봇 구현 (Spring Boot)
-
----
-
-## **3. 고급 학습 및 서비스 개발 (5~6주)**
-
-### **3.1 LLM 커스터마이징**
-- **목표:** 파인튜닝 및 커스터마이징 기술 학습.
-- **내용:**
-  - Hugging Face Datasets와 Trainer API 활용
-  - Transfer Learning: 기존 모델에 새 데이터 추가 학습
-- **프로젝트 아이디어:** 회사 데이터 기반으로 LLM 커스터마이징
-
-### **3.2 RAG 고급 활용**
-- **목표:** RAG를 통해 대규모 데이터를 효율적으로 처리.
-- **내용:**
-  - 실시간 데이터 업데이트
-  - 대규모 검색 성능 최적화
-- **프로젝트 아이디어:** 사용자 로그 데이터를 활용한 실시간 추천 시스템
-
----
-
-## **4. 실무 적용 프로젝트 (7~8주)**
-
-### **4.1 회사 요구사항 분석**
-- LLM과 RAG가 필요한 실무 문제 도출
-- 주요 활용 사례: 
-  - 고객 지원 자동화
-  - 내부 데이터 검색 최적화
-  - 데이터 요약 및 통찰 제공
-
-### **4.2 POC(Proof of Concept) 개발**
-- **목표:** 실무 환경에서 작동 가능한 작은 단위의 프로젝트 진행.
-- **예:** 회사 문서 관리 시스템과 통합된 지능형 검색 엔진 개발
-- **기술 스택:**
-  - Java-Spring Boot 기반 백엔드
-  - LLM/RAG 통합 (Python 또는 API 연동)
-
----
-
-## **5. 학습과 병행할 참고자료**
-1. **책**
-   - [Deep Learning with Python](https://www.manning.com/books/deep-learning-with-python)
-   - [Generative AI with Python and TensorFlow 2](https://www.packtpub.com/product/generative-ai-with-python-and-tensorflow-2/9781800565788)
-2. **온라인 강좌**
-   - [Coursera: Natural Language Processing Specialization](https://www.coursera.org/specializations/natural-language-processing)
-   - [FastAI NLP 강의](https://course.fast.ai/)
-
----
-
-## **결론**
-1. 기초 개념을 빠르게 습득하고 실습 중심으로 학습.
-2. 간단한 프로젝트를 통해 RAG의 동작 원리를 이해.
-3. 실무 환경에서 적용 가능한 서비스 개발로 학습 내용을 강화.
-
 ## **마인드 맵**
 
 ![img.png](img.png)
@@ -167,7 +59,7 @@ LLM(Large Language Models)은 자연어 처리(NLP)의 최전선에서 활약하
 ---
 
 ## **고급: 전문가 과정** (추가 학습)
-고급 과정은 사용자의 필요에 따라 정의되며, 특정 도메인의 활용 사례와 대규모 모델의 미세 조정(Fine-Tuning) 등을 포함할 수 있습니다.
+특정 도메인의 활용 사례와 대규모 모델의 미세 조정(Fine-Tuning), 프롬프트튜닝(Prompt Tuning) 학습
 
 ---
 
@@ -271,17 +163,6 @@ LLM(Large Language Models) 스터디 커리큘럼.
 
 ---
 
-### **7~8주차: 팀별 프로젝트**
-- **목표**:
-  - 팀별로 아이디어를 선정하고 LLM을 활용한 프로젝트를 구현.
-- **프로젝트 예시**:
-  - AI 기반 고객 응대 챗봇.
-  - 문서 요약 및 분석 시스템.
-  - 소셜 미디어 감정 분석 툴.
-- **성과물**:
-  - 데모 발표 및 코드 리뷰.
-
----
 
 
 # NLP
@@ -458,4 +339,55 @@ print(tokens)
 ```
 
 Treebank Tokenization은 NLTK 라이브러리의 `TreebankWordTokenizer` 모듈을 통해 사용할 수 있습니다. 이 토큰화 기법은 Penn Treebank 코퍼스에 기반하여 영어 문장을 토큰으로 분리하는 데 사용됩니다.
+
+---
+
+# LLM 학습 커리큘럼
+
+LLM(Large Language Models)은 자연어 처리(NLP)의 최전선에서 활약하며, ChatGPT와 같은 기술의 기반이 되는 중요한 분야입니다. 이 커리큘럼은 LLM을 학습하고자 하는 분들을 위해 초급, 중급, 고급 단계로 나뉘어 구성되었습니다.
+
+---
+
+## **초급: 기초 다지기**
+### 1. 프로그래밍 언어 습득
+- **Python**: LLM을 다루는 데 가장 널리 사용되는 언어입니다.  
+  - **학습 목표**: Python의 기본 문법 및 데이터 처리를 위한 라이브러리 사용.
+  - **추천 라이브러리**: Pandas, NumPy
+
+### 2. 기초 통계학과 선형대수학
+- **통계학**
+  - 평균, 표준편차, 확률 등의 기초 개념 이해.
+- **선형대수학**
+  - 행렬 연산, 벡터, 스칼라 곱 등의 수학적 개념 습득.
+
+### 3. 자연어 처리(NLP)의 기초
+- 토큰화(Tokenization)
+- 어휘 분석(Vocabulary Analysis)
+- 문법 분석(Syntax Parsing)
+
+---
+
+## **중급: 심화 학습**
+### 1. 기계학습의 기본
+- **학습 유형**
+  - 지도 학습(Supervised Learning)
+  - 비지도 학습(Unsupervised Learning)
+  - 강화 학습(Reinforcement Learning)
+- **학습 목표**: 머신러닝 알고리즘의 기본적인 개념과 활용 방법 습득.
+
+### 2. 딥러닝과 신경망
+- **신경망 기초**: Fully Connected Networks
+- **고급 신경망 구조**
+  - CNN(Convolutional Neural Networks)
+  - RNN(Recurrent Neural Networks)
+  - LSTM(Long Short-Term Memory)
+
+### 3. LLM의 이해
+- **핵심 기술**
+  - Transformer 아키텍처
+- **학습 목표**
+  - ChatGPT와 같은 모델의 기반 기술 이해.
+  - LLM의 학습 과정 및 동작 원리 학습.
+
+---
 
