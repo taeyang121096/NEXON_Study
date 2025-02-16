@@ -1,201 +1,187 @@
+# PyTorch vs NumPy
 
+## 1. 개요
+**PyTorch**와 **NumPy**는 모두 수치 연산을 수행하는 라이브러리이지만, 주로 사용되는 목적과 기능이 다릅니다.
 
-# LLM을 위한 선형 대수학 학습
-
-LLM(대형 언어 모델, Large Language Model)을 이해하기 위해 필요한 선형 대수학 개념들을 정리하고 학습 순서를 제시해 줄게. LLM은 기본적으로 행렬 연산, 벡터 공간, 미분 등을 활용한 최적화 과정을 거쳐 훈련되므로, 선형 대수학은 그 핵심 개념 중 하나야.
-
-## 📌 LLM을 이해하기 위한 선형 대수학 개념 정리
-LLM이 어떻게 동작하는지 깊이 이해하려면 다음과 같은 선형 대수학 개념을 알아야 해.
-
-### 1️⃣ 벡터(Vector)와 벡터 공간
-- **벡터의 정의**: 방향과 크기를 가진 객체
-- **벡터 연산**: 덧셈, 뺄셈, 스칼라 곱
-- **유클리드 공간(Euclidean Space)**: 벡터가 n차원 공간에서 표현됨
-- **노름(Norm)**: 벡터의 크기를 측정하는 방법 (L1, L2 노름)
-📖 **학습 자료**: 벡터 개념 정리 → 벡터 연산 실습 → 벡터 공간 이해
-
-```python
-import numpy as np
-v1 = np.array([3, 4])
-v2 = np.array([1, 2])
-print("벡터 덧셈:", v1 + v2)
-```
-
-### 2️⃣ 행렬(Matrix)와 행렬 연산
-- **행렬의 정의**: 숫자로 구성된 2차원 배열
-- **행렬 연산**: 덧셈, 곱셈, 전치, 역행렬
-- **행렬 곱(Matrix Multiplication)**: 신경망에서 가중치(weight)를 곱할 때 사용
-- **희소 행렬(Sparse Matrix)**: 대부분의 값이 0인 행렬 (LLM에서 중요한 개념)
-📖 **학습 자료**: 행렬 기본 연산 → 희소 행렬 개념 → 행렬 연산을 통한 변환
-
-```python
-A = np.array([[1, 2], [3, 4]])
-B = np.array([[2, 0], [1, 3]])
-print("행렬 곱:", np.matmul(A, B))
-```
-
-### 3️⃣ 선형 변환(Linear Transformation)
-- **선형 변환이란?**: 한 벡터 공간을 다른 벡터 공간으로 변환하는 함수
-- **기저(Basis)와 차원(Dimension)**: 벡터 공간의 최소 표현
-- **특잇값 분해(SVD, Singular Value Decomposition)**: 데이터 차원 축소와 연관
-📖 **학습 자료**: 선형 변환 정의 → 기저 벡터 이해 → SVD 개념 학습
-
-### 4️⃣ 고유값(Eigenvalue)과 고유벡터(Eigenvector)
-- **고유값과 고유벡터**: 선형 변환에서 변화하지 않는 축을 나타냄
-- **PCA(주성분 분석, Principal Component Analysis)**: 차원 축소 기법으로 활용
-📖 **학습 자료**: 고유값과 고유벡터 개념 → PCA 이론 → 실제 데이터 적용
-
-```python
-eig_vals, eig_vecs = np.linalg.eig(A)
-print("고유값:", eig_vals)
-print("고유벡터:", eig_vecs)
-```
-
-### 5️⃣ 내적(Dot Product)과 코사인 유사도(Cosine Similarity)
-- **내적(Dot Product)**: 두 벡터 간 유사도를 측정하는 방법
-- **코사인 유사도(Cosine Similarity)**: NLP에서 문장 간 유사도를 계산하는 데 사용
-📖 **학습 자료**: 내적과 코사인 유사도 개념 → 문장 임베딩 활용
-
-```python
-def cosine_similarity(v1, v2):
-    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
-vec1 = np.array([1, 2, 3])
-vec2 = np.array([2, 3, 4])
-print("코사인 유사도:", cosine_similarity(vec1, vec2))
-```
-
-### 6️⃣ 그래디언트(Gradient)와 행렬 미분(Matrix Calculus)
-- **미분과 최적화**: 모델 학습에서 중요한 역할을 함
-- **행렬 미분**: LLM에서 손실 함수를 최소화하기 위해 사용
-- **역전파(Backpropagation)**: 딥러닝의 핵심 개념
-📖 **학습 자료**: 행렬 미분 기초 → 손실 함수 최적화 → 역전파 학습
-
-```python
-import sympy as sp
-x = sp.Symbol('x')
-f = x**2 + 3*x + 5
-dfdx = sp.diff(f, x)
-print("미분 결과:", dfdx)
-```
-
-## 📚 학습 로드맵
-💡 아래 순서대로 학습하면 효과적으로 선형 대수학을 익힐 수 있어.
-
-1. **벡터와 행렬 기본 개념 학습** → 벡터 연산, 행렬 연산, 기저 벡터 이해
-2. **선형 변환과 차원 축소 학습** → 고유값과 고유벡터, PCA, SVD
-3. **내적과 유사도 분석** → NLP에서 문장 임베딩 활용
-4. **행렬 미분과 최적화 학습** → 그래디언트, 손실 함수, 역전파
+- **PyTorch**: 딥러닝 및 GPU 가속 연산을 위한 프레임워크
+- **NumPy**: 과학 계산과 행렬 연산을 위한 라이브러리
 
 ---
 
+## 2. 주요 차이점 비교
 
+| 항목              | PyTorch                                  | NumPy                                   |
+|------------------|---------------------------------------|----------------------------------------|
+| **주요 목적**     | 딥러닝 및 머신러닝 모델 학습         | 수치 연산 및 행렬 연산                 |
+| **기본 데이터 구조** | `torch.Tensor`                       | `numpy.ndarray`                        |
+| **GPU 지원**      | GPU 가속 지원 (`.to(device)`)         | CPU 연산 전용                          |
+| **자동 미분**     | `torch.autograd` 사용 가능           | 미분 기능 없음                         |
+| **딥러닝 지원**   | 신경망 구축을 위한 `torch.nn` 제공   | 직접 구현 필요                         |
+| **연산 속도**     | GPU 사용 시 빠름                     | CPU 연산만 가능                        |
+| **NumPy 변환**   | `tensor.numpy()` 변환 가능           | `torch.from_numpy()` 변환 가능         |
+| **사용 예시**     | 딥러닝, 신경망 학습, 이미지 처리      | 데이터 분석, 과학 계산, 통계 처리      |
 
+---
 
+## 3. 데이터 구조 차이
+### PyTorch (`torch.Tensor`)
+```python
+import torch
+x = torch.tensor([[1, 2], [3, 4]])
+print(x)
+```
+- GPU에서 연산 가능: `x.to('cuda')`
+- 미분 지원 가능: `x.requires_grad_()`
 
-
-
-
-# LLM을 위한 선형 대수학 학습
-
-LLM을 이해하는 데 필요한 선형 대수학 개념을 정리하고, Python과 `NumPy`를 사용하여 실습할 수 있도록 구성하였습니다.
-
-## 1. 벡터(Vector) 연산 실습
-
-벡터는 LLM에서 토큰 임베딩, 문장 벡터 등을 표현할 때 사용됩니다.
-
+### NumPy (`numpy.ndarray`)
 ```python
 import numpy as np
-
-# 벡터 정의
-v1 = np.array([3, 4])
-v2 = np.array([1, 2])
-
-# 벡터 연산
-add = v1 + v2  # 벡터 덧셈
-sub = v1 - v2  # 벡터 뺄셈
-dot_product = np.dot(v1, v2)  # 내적 (dot product)
-norm_v1 = np.linalg.norm(v1)  # 벡터의 크기 (L2 노름)
-
-print(f"벡터 덧셈: {add}")
-print(f"벡터 뺄셈: {sub}")
-print(f"벡터 내적: {dot_product}")
-print(f"벡터 크기: {norm_v1}")
+x = np.array([[1, 2], [3, 4]])
+print(x)
 ```
+- GPU 가속 불가능
+- 미분 기능 없음
 
-## 2. 행렬(Matrix) 연산 실습
+---
 
-행렬 연산은 LLM에서 가중치(weight)를 학습할 때 핵심적으로 사용됩니다.
-
+## 4. GPU 가속 차이
 ```python
-# 행렬 정의
-A = np.array([[1, 2], [3, 4]])
-B = np.array([[2, 0], [1, 3]])
-
-# 행렬 연산
-mat_add = A + B  # 행렬 덧셈
-mat_mul = np.matmul(A, B)  # 행렬 곱
-mat_transpose = A.T  # 전치 행렬
-
-print(f"행렬 덧셈:\n{mat_add}")
-print(f"행렬 곱:\n{mat_mul}")
-print(f"전치 행렬:\n{mat_transpose}")
+# PyTorch (GPU 사용)
+x = torch.tensor([1.0, 2.0, 3.0])
+x = x.to('cuda')  # GPU에서 연산 가능
 ```
+NumPy는 GPU를 지원하지 않으며, CPU에서만 연산 가능합니다.
 
-## 3. 고유값(Eigenvalue)과 고유벡터(Eigenvector) 실습
+---
 
-고유값과 고유벡터는 차원 축소(PCA)나 LLM의 차원 변환에서 활용됩니다.
-
+## 5. 자동 미분 지원 (PyTorch 전용)
+PyTorch는 `autograd`를 사용하여 자동 미분을 지원합니다.
 ```python
-# 고유값과 고유벡터 계산
-eig_vals, eig_vecs = np.linalg.eig(A)
+x = torch.tensor(2.0, requires_grad=True)
+y = x ** 2
 
-print(f"고유값:\n{eig_vals}")
-print(f"고유벡터:\n{eig_vecs}")
+y.backward()
+print(x.grad)  # dy/dx = 2x = 4
 ```
+NumPy에서는 별도의 라이브러리를 사용해야 미분을 계산할 수 있습니다.
 
-## 4. 코사인 유사도(Cosine Similarity) 실습
+---
 
-LLM에서 두 문장의 의미가 얼마나 유사한지 측정할 때 사용됩니다.
+## 6. NumPy ↔ PyTorch 변환
+PyTorch와 NumPy는 상호 변환이 가능합니다.
 
+### PyTorch → NumPy
 ```python
-def cosine_similarity(v1, v2):
-    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
-
-# 예제 벡터 (임베딩 벡터라고 가정)
-vec1 = np.array([1, 2, 3])
-vec2 = np.array([2, 3, 4])
-
-similarity = cosine_similarity(vec1, vec2)
-print(f"코사인 유사도: {similarity}")
+tensor = torch.tensor([1.0, 2.0, 3.0])
+numpy_array = tensor.numpy()
 ```
 
-## 5. 그래디언트(Gradient) 계산 실습
-
-최적화 과정에서 손실 함수의 최소값을 찾기 위해 미분이 필요합니다.
-
+### NumPy → PyTorch
 ```python
-import sympy as sp
-
-# 변수 정의
-x = sp.Symbol('x')
-
-# 함수 정의 (예: x^2 + 3x + 5)
-f = x**2 + 3*x + 5
-
-# 미분
-dfdx = sp.diff(f, x)
-print(f"함수 f(x): {f}")
-print(f"미분 결과: {dfdx}")
+numpy_array = np.array([1.0, 2.0, 3.0])
+tensor = torch.from_numpy(numpy_array)
 ```
 
-## 📌 정리
+---
 
-이제 LLM에서 사용되는 핵심적인 선형 대수 개념을 Python으로 실습해보았습니다.
+## 7. 결론
+- **PyTorch**는 딥러닝과 머신러닝 모델 훈련에 최적화된 프레임워크로, **GPU 가속 및 자동 미분을 지원**합니다.
+- **NumPy**는 과학 계산과 데이터 분석에 적합하며, **CPU 기반의 빠른 행렬 연산을 지원**하지만 딥러닝에는 적합하지 않습니다.
 
-1. **벡터 연산** → NLP 임베딩
-2. **행렬 연산** → LLM 가중치 학습
-3. **고유값, 고유벡터** → 차원 축소
-4. **코사인 유사도** → 문장 유사도 분석
-5. **그래디언트** → 모델 최적화
+👉 **딥러닝을 할 경우 PyTorch를 사용하고, 데이터 분석이나 수치 계산이 필요할 때 NumPy를 사용하세요!**
 
+---
+## PyTorch 구조
 
+---
+
+![img.png](img.png)
+
+---
+
+# Tensor 개념 정리
+
+---
+
+## 1. Tensor란?
+Tensor(텐서)는 데이터를 다차원 배열 형태로 표현하는 수학적 개념으로, 주로 머신 러닝과 딥 러닝에서 사용됩니다. Tensor는 확장된 벡터 및 행렬 개념으로 볼 수 있으며, 다양한 차원의 데이터를 표현하는 데 유용합니다.
+---
+## 2. Tensor의 차원(Dimension)
+Tensor는 차원(또는 랭크, Rank)에 따라 다음과 같이 분류됩니다:
+
+- **0차원 Tensor (Scalar, 스칼라)**: 단일 값을 가지는 텐서. 예) `5`, `3.14`
+- **1차원 Tensor (Vector, 벡터)**: 숫자의 배열(리스트). 예) `[1, 2, 3]`
+- **2차원 Tensor (Matrix, 행렬)**: 행과 열을 가지는 2차원 배열. 예)
+  ```
+  [[1, 2, 3],
+   [4, 5, 6]]
+  ```
+- **3차원 Tensor**: 여러 개의 행렬을 포함하는 3D 배열. 예)
+  ```
+  [[[1, 2], [3, 4]],
+   [[5, 6], [7, 8]]]
+  ```
+- **N차원 Tensor**: 3차원 이상 확장된 다차원 배열.
+---
+## 3. Tensor의 주요 연산
+Tensor는 다양한 연산이 가능합니다:
+
+- **덧셈 및 뺄셈**: 동일한 차원의 Tensor끼리 연산 가능
+- **곱셈**: 행렬 곱셈 또는 요소별 곱셈(element-wise multiplication)
+- **전치(Transpose)**: 행과 열을 교환하는 연산
+- **Reshape**: Tensor의 형태를 변경
+- **Indexing & Slicing**: 특정 요소를 선택하거나 부분을 추출
+---
+## 4. Tensor와 NumPy 비교
+Tensor는 NumPy 배열과 유사하지만, 딥러닝 프레임워크(PyTorch, TensorFlow)에서는 GPU 연산을 지원하여 더욱 효율적인 연산이 가능합니다.
+
+| 특징          | NumPy | Tensor |
+|--------------|-------|--------|
+| 다차원 배열   | O     | O      |
+| GPU 가속     | X     | O      |
+| 자동 미분 지원 | X     | O      |
+| 딥러닝 활용   | 제한적 | 매우 활발 |
+---
+## 5. Tensor의 활용
+Tensor는 주로 다음과 같은 분야에서 사용됩니다:
+
+- **딥러닝 및 머신러닝**: 신경망 모델의 데이터 표현 및 연산
+- **컴퓨터 비전**: 이미지 데이터 처리 (3D Tensor 활용)
+- **자연어 처리(NLP)**: 단어 임베딩 및 시퀀스 데이터 표현
+- **물리학 및 공학**: 다차원 데이터 모델링
+---
+## 6. Tensor 관련 라이브러리
+Tensor를 다룰 수 있는 대표적인 라이브러리는 다음과 같습니다:
+
+- **TensorFlow**: Google이 개발한 머신러닝 라이브러리
+- **PyTorch**: Facebook이 개발한 동적 신경망 라이브러리
+- **NumPy**: 기본적인 다차원 배열 연산 지원
+---
+## 7. 간단한 Tensor 코드 예제 (PyTorch)
+```python
+import torch
+
+# 1D Tensor 생성
+x = torch.tensor([1, 2, 3, 4])
+print(x)
+
+# 2D Tensor 생성
+y = torch.tensor([[1, 2], [3, 4]])
+print(y)
+
+# Tensor 연산 (덧셈)
+z = x + 2
+print(z)
+```
+---
+## 8. 결론
+
+---
+
+### Tensor는 머신러닝 및 딥러닝에서 핵심적인 데이터 표현 방식입니다. 다차원 배열 형태의 데이터를 효율적으로 표현하고 연산할 수 있어, 다양한 인공지능 응용 분야에서 활용되고 있습니다.
+
+---
+
+## Tensor
+
+![img_1.png](img_1.png)
