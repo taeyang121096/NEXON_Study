@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     csv_path: str = "./data/scotch_review.csv"
     embedding_model: str = "intfloat/multilingual-e5-base"
     translation_model: str = "facebook/nllb-200-distilled-600M"
-    llm_model: str = "cerebras/btlm-3b-8k-base"
+    llm_model: str = "beomi/KoAlpaca-Polyglot-5.8B"
 
     class Config:
         env_file = ".env"

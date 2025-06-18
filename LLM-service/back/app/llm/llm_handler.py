@@ -6,6 +6,8 @@ from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 import asyncio
 import torch
 
+torch.backends.cudnn.benchmark = True  # 성능 최적화
+
 model_name = settings.llm_model
 
 print("CUDA 버전:", torch.version.cuda)
@@ -28,7 +30,7 @@ pipe = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
-    max_new_tokens=512,
+    max_new_tokens=256,
     temperature=0.5,
     do_sample=True
 )
@@ -37,15 +39,10 @@ llm = HuggingFacePipeline(pipeline=pipe)
 
 whisky_prompt_template = PromptTemplate.from_template(
     """
-    당신은 위스키와 술에 대해 잘 아는 전문가입니다.
-    아래 예시처럼 답변해주세요.
-    
-    예시:
-    질문: 조니워커 블루는 뭐야?
-    답변: 조니워커 블루는 고급 스카치 위스키로, 부드럽고 풍부한 맛을 자랑합니다.
-    
+    당신은 위스키 전문가입니다. 아래의 질문에 대해 친절하고 정확하게 답변해 주세요.
+
     질문: {question}
-    답변:
+    답변(한국어로, 3문장 이내로 요약):
 """
 )
 

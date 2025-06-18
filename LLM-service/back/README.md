@@ -23,7 +23,6 @@
 
 ## 프로젝트 아키텍처
 ![아키텍처도.png](%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EB%8F%84.png)
-
 ## 프로젝트 구조
 
 ```
@@ -52,21 +51,8 @@
 
 ### 설치
 
-1. 저장소 클론
-```bash
-git clone [repository-url]
-cd [repository-name]
-```
 
-2. 가상환경 생성 및 활성화
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# 또는
-.\venv\Scripts\activate  # Windows
-```
-
-3. 의존성 설치
+1. 의존성 설치
 ```bash
 pip install -r requirements.txt
 ```
@@ -76,11 +62,6 @@ pip install -r requirements.txt
 Docker Compose를 사용하여 실행 (qdrant):
 ```bash
 docker-compose up -d
-```
-
-또는 로컬에서 실행:
-```bash
-uvicorn main:app --reload
 ```
 
 ## API 엔드포인트
